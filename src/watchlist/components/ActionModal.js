@@ -1,39 +1,47 @@
 import React, {Component} from 'react';
-import {Modal, Text, TouchableHighlight, View, Alert} from 'react-native';
+import {Modal, Text, View, Alert,TouchableHighlight,Dimensions,TouchableOpacity} from 'react-native';
+const {h} = Dimensions.get('window').height;
 
+import {connect} from "react-redux";
 class ActionModal extends Component {
-  state = {
-    modalVisible: false,
-  };
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
+  
   render() {
-    return (
+   return (
         <Modal
+        style={{flex:1}}
           animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
+          transparent={true}
+          visible={this.props.modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            this.props.hideModal();
           }}>
-          <View style={{marginTop: 22}}>
-            <View>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
+          <TouchableHighlight onPress={()=>{this.props.hideModal()}} style={{flex:1,backgroundColor:"transparent"}}>
+            <View style={{flex:1,justifyContent:'flex-end'}}>
+              <TouchableOpacity onPress={()=>{}} style={{borderRadius:10,elevation:1,height:"30%",backfaceVisibility:"visible",backgroundColor:"white"}}>
+                <View style={{justifyContent:"space-evenly",alignItems:"center"}} >
+                <View style={{flexDirection:"row"}}>
+                  <Text style={{fontSize:30}}>{this.props.item.name} </Text>
+                  <Text style={{fontSize:30}}>{this.props.item.rate}  </Text>
+                </View>
+                  <View style={{flexDirection:"row"}}>
+                    <Text style={{fontSize:30}}>BUY </Text>
+                    <Text style={{fontSize:30}}>SELL  </Text>
+                  </View>
+                  </View>
+            </TouchableOpacity>
             </View>
-          </View>
+          </TouchableHighlight>
         </Modal>
     );
   }
 }
 
-export default ActionModal;
+
+
+const mapStateToProps = (state) =>({
+  modalVisible : state.modal.modalVisible,
+  item : state.modal.item
+})
+
+
+export default connect(mapStateToProps)(ActionModal);
