@@ -21,8 +21,6 @@ class Watchlist extends React.Component {
         
             <Header/>
             <TopTabNavigator toggleModal={this.toggleModal}/>
-            {/* <ActionModal modalVisible={this.props.modalVisible} hideModal={this.props.hideModal} ></ActionModal> */}
-            
         </View>
       );
     }

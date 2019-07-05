@@ -2,7 +2,6 @@
 import React from 'react';
 import { Text, View ,FlatList} from 'react-native';
 import ListElement from './ListElement';
-import ActionModal from './ActionModal';
 
 class StockList extends React.Component {
     constructor(props){
