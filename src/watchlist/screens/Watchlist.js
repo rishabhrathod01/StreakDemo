@@ -1,11 +1,13 @@
 
 import React from 'react';
-import { Text, View } from 'react-native';
-import ActionModal from "../components/ActionModal";
+import { Text, View,StyleSheet,PanResponder,ScrollView,Animated,TouchableHighlight,Dimensions,TouchableOpacity} from 'react-native';
 import TopTabNavigator from "../components/TopTabNavigator";
 import Header from "../components/Header";
 import { connect } from 'react-redux';
 import {hideModal} from "../../store/actions/Modal";
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
+
 class Watchlist extends React.Component {
   constructor(props){
     super(props)
@@ -19,7 +21,8 @@ class Watchlist extends React.Component {
         
             <Header/>
             <TopTabNavigator toggleModal={this.toggleModal}/>
-             <ActionModal modalVisible={this.props.modalVisible} hideModal={this.props.hideModal} ></ActionModal>
+            {/* <ActionModal modalVisible={this.props.modalVisible} hideModal={this.props.hideModal} ></ActionModal> */}
+            
         </View>
       );
     }

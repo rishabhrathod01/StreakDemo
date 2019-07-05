@@ -9,6 +9,7 @@ class ListElement extends Component{
         return (
               <TouchableOpacity
               onPress={()=>{this.props.showModal(item)}} 
+              onLongPress={()=>{}}
               style={{flex:1,margin:10,flexDirection:"row",justifyContent:"space-between"}}>
                   <View>
                       <View><Text>{item.name}</Text></View>
