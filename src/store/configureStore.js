@@ -1,12 +1,14 @@
-import { createStore , combineReducers } from 'redux';
+import { createStore, combineReducers } from "redux";
 import ModalReducer from "./reducers/ModalReducer";
+import WatchListReducer from "./reducers/WatchListReducer";
 
 const rootReducer = combineReducers({
-    modal : ModalReducer,
+  modal: ModalReducer,
+  watchList: WatchListReducer
 });
 
-const configureStore = () =>{
-    return createStore(rootReducer);
-}
+const configureStore = () => {
+  return createStore(rootReducer);
+};
 
 export default configureStore;

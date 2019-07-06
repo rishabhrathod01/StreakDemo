@@ -1,3 +1,5 @@
-export const SHOW_MODAL = 'SHOW_MODAL';
-export const HIDE_MODAL = 'HIDE_MODAL';
-
+export const SHOW_MODAL = "SHOW_MODAL";
+export const HIDE_MODAL = "HIDE_MODAL";
+export const TOGGLE_EDITSCREEN = "TOGGLE_EDITSCREEN";
+export const UPDATE_LIST = "UPDATE_LIST";
+export const SET_CURRENT_WATCHLIST = "SET_CURRENT_WATCHLIST";
