@@ -41,7 +41,7 @@ class CustomTopTabNavigator extends PureComponent {
             height: 70 * Constants.vw
           },
           labelStyle: {
-            fontSize: 12
+            fontSize: 12 * Constants.vw
           }
         },
         tabBarComponent: props => (

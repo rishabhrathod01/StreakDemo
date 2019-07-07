@@ -108,7 +108,7 @@ class RootScreen extends React.Component {
                 <View style={{ padding: 10 * Constants.vw }}>
                   <Text
                     style={{
-                      fontSize: 16,
+                      fontSize: 16 * Constants.vw,
                       color: "black"
                     }}
                   >
@@ -118,7 +118,7 @@ class RootScreen extends React.Component {
                     style={{
                       position: "relative",
                       top: 0,
-                      fontSize: 12,
+                      fontSize: 12 * Constants.vw,
                       color: "black"
                     }}
                   >
@@ -149,7 +149,8 @@ class RootScreen extends React.Component {
                         width: 150 * Constants.vw,
                         backgroundColor: "blue",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
+                        borderRadius: 5 * Constants.vw
                       }}
                     >
                       <View>
@@ -168,7 +169,8 @@ class RootScreen extends React.Component {
                         width: 150 * Constants.vw,
                         backgroundColor: "red",
                         justifyContent: "center",
-                        alignItems: "center"
+                        alignItems: "center",
+                        borderRadius: 5 * Constants.vw
                       }}
                     >
                       <View>

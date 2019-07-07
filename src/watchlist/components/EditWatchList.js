@@ -3,6 +3,7 @@ import { View, Text, Modal } from "react-native";
 import { toggleEditScreen } from "../../store/actions/Modal";
 import { connect } from "react-redux";
 import WatchListDrag from "./WatchListDrag";
+import { Constants } from "../../common/constants";
 
 class EditWatchList extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class EditWatchList extends Component {
           this.toggleScreen();
         }}
       >
-        <View style={{ flex: 1, marginTop: 22 }}>
+        <View style={{ flex: 1, marginTop: 22 * Constants.vh }}>
           <WatchListDrag
             toggleScreen={this.toggleScreen}
             watchList={this.props.watchList[0]}

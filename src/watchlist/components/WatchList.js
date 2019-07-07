@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, FlatList } from "react-native";
 import ListElement from "./ListElement";
+import { Constants } from "../../common/constants";
 
 class WatchList extends React.Component {
   constructor(props) {
@@ -50,6 +51,11 @@ class WatchList extends React.Component {
           data={this.state.watchList.list}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+          ItemSeparatorComponent={() => (
+            <View
+              style={{ height: 0.3 * Constants.vh, backgroundColor: "grey" }}
+            />
+          )}
         />
       </View>
     );

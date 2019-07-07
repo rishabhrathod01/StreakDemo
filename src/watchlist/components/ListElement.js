@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { showModal, toggleEditScreen } from "../../store/actions/Modal";
 import { setcurrentWatchList } from "../../store/actions/WatchListActions";
+import { Constants } from "../../common/constants";
 
 class ListElement extends Component {
   setcurrentWatchList = key => {
@@ -28,25 +29,31 @@ class ListElement extends Component {
         delayLongPress={400}
         style={{
           flex: 1,
-          margin: 15,
+          margin: 15 * Constants.vw,
           flexDirection: "row",
           justifyContent: "space-between"
         }}
       >
         <View>
           <View>
-            <Text>{item.name}</Text>
+            <Text style={{ fontSize: 14 * Constants.vw, color: "black" }}>
+              {item.name}
+            </Text>
           </View>
           <View>
-            <Text>ESY</Text>
+            <Text style={{ fontSize: 12 * Constants.vw }}>ESY</Text>
           </View>
         </View>
         <View>
           <View>
-            <Text>{item.rate}</Text>
+            <Text style={{ fontSize: 16 * Constants.vw, color: "black" }}>
+              {item.rate}
+            </Text>
           </View>
           <View>
-            <Text>{item.change}</Text>
+            <Text style={{ fontSize: 12 * Constants.vw, color: "green" }}>
+              {item.change}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>

@@ -33,7 +33,7 @@ class WatchList extends Component {
         key={item.id}
         style={{
           flex: 1,
-          height: 70,
+          height: 70 * Constants.vw,
           backgroundColor: "white",
           alignItems: "center",
           justifyContent: "center",
@@ -106,17 +106,23 @@ class WatchList extends Component {
 
 const Header = props => {
   return (
-    <View style={{ height: 40 * Constants.vw, flexDirection: "row" }}>
+    <View
+      style={{
+        height: 50 * Constants.vw,
+        flexDirection: "row",
+        alignItems: "center"
+      }}
+    >
       <TouchableOpacity
         onPress={() => {
           props.toggleScreen();
         }}
-        style={{ flex: 1, margin: 10 * Constants.vw }}
+        style={{ marginLeft: 10 * Constants.vw }}
       >
         <IIcon name="ios-arrow-round-back" size={40} color="black" />
       </TouchableOpacity>
       <View style={{ flex: 4, justifyContent: "center", alignItems: "center" }}>
-        <Text>Edit WatchList</Text>
+        <Text style={{ fontSize: 22 * Constants.vw }}>Edit WatchList</Text>
       </View>
       <View style={{ flex: 1, padding: 10 * Constants.vw }}>
         <TouchableOpacity
