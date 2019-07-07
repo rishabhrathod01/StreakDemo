@@ -11,6 +11,7 @@ import {
 import { connect } from "react-redux";
 import { hideModal } from "./store/actions/Modal";
 import TabNavigator from "./navigation/TabNavigator";
+import { Constants } from "./common/constants";
 
 const HEIGHT = Dimensions.get("window").height;
 const WIDTH = Dimensions.get("window").width;
@@ -89,7 +90,6 @@ class RootScreen extends React.Component {
             />
             <Animated.View
               {...this.panResponder.panHandlers}
-              onPress={() => {}}
               style={[
                 animatedHeight,
                 {
@@ -103,10 +103,82 @@ class RootScreen extends React.Component {
                   backgroundColor: "white"
                 }
               ]}
-            />
-            <View style={{ flex: 1 }}>
-              <Text>{this.props.item.name}</Text>
-            </View>
+            >
+              <View style={{ flex: 1 }}>
+                <View style={{ padding: 10 * Constants.vw }}>
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      color: "black"
+                    }}
+                  >
+                    {this.props.item.name}
+                  </Text>
+                  <Text
+                    style={{
+                      position: "relative",
+                      top: 0,
+                      fontSize: 12,
+                      color: "black"
+                    }}
+                  >
+                    ESY {this.props.item.rate}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: "grey",
+                    height: 0.5 * Constants.vw,
+                    width: "100%"
+                  }}
+                />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    padding: 30 * Constants.vw
+                  }}
+                >
+                  <View
+                    style={{
+                      padding: 10 * Constants.vw
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        height: 60 * Constants.vw,
+                        width: 150 * Constants.vw,
+                        backgroundColor: "blue",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <View>
+                        <Text style={{ color: "white" }}>BUY</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <View
+                    style={{
+                      padding: 10 * Constants.vw
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={{
+                        height: 60 * Constants.vw,
+                        width: 150 * Constants.vw,
+                        backgroundColor: "red",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <View>
+                        <Text style={{ color: "white" }}>SELL</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Animated.View>
           </Animated.View>
         ) : (
           <View />
@@ -114,8 +186,16 @@ class RootScreen extends React.Component {
       </View>
     );
   }
-}
 
+  renderView = () => {
+    console.warn("HI");
+    return (
+      <View>
+        <Text>{this.props.item.name}Hello</Text>
+      </View>
+    );
+  };
+}
 const mapStateToProps = state => ({
   modalVisible: state.modal.modalVisible,
   item: state.modal.item

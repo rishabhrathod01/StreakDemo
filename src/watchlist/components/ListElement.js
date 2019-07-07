@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { showModal, toggleEditScreen } from "../../store/actions/Modal";
+import { setcurrentWatchList } from "../../store/actions/WatchListActions";
 
 class ListElement extends Component {
-  longPressHandler = async () => {
-    this.props.setCurrentWatchList();
+  setcurrentWatchList = key => {
+    // console.warn("set Current watchlist ", key);
+    this.props.setcurrentWatchList(key);
+  };
+
+  longPressHandler = () => {
+    this.setcurrentWatchList(this.props.currentWatchListKey);
+    // console.warn(this.props.currentWatchListKey);
     this.props.toggleEditScreen();
   };
   render() {
@@ -21,7 +28,7 @@ class ListElement extends Component {
         delayLongPress={400}
         style={{
           flex: 1,
-          margin: 10,
+          margin: 15,
           flexDirection: "row",
           justifyContent: "space-between"
         }}
@@ -53,7 +60,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   showModal: item => dispatch(showModal(item)),
-  toggleEditScreen: () => dispatch(toggleEditScreen())
+  toggleEditScreen: () => dispatch(toggleEditScreen()),
+  setcurrentWatchList: key => dispatch(setcurrentWatchList(key))
 });
 
 export default connect(

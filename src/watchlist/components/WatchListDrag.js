@@ -1,91 +1,37 @@
-import React, { PureComponent } from "react";
-import StockElement from "./StockElement";
-import SortableList from "react-native-sortable-list";
-import Row from "./Row";
-import { View, TouchableOpacity, Text } from "react-native";
+import React, { Component } from "react";
+
+import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Constants } from "../../common/constants";
+import IIcon from "react-native-vector-icons/Ionicons";
+import OIcon from "react-native-vector-icons/Octicons";
+import { connect } from "react-redux";
+import { toggleEditScreen } from "../../store/actions/Modal";
+import { updateList } from "../../store/actions/WatchListActions";
 
-class WatchList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      time: 0,
-      feed: "feed",
-      text: "Search & Add"
-    };
-  }
-
-  componentDidMount() {
-    var ws = new WebSocket("wss://www.cryptofacilities.com/ws/v1");
-
-    ws.onopen = () => {
-      // connection opened
-      var msg = {
-        event: "subscribe",
-        feed: "heartbeat"
-      };
-      ws.send(JSON.stringify(msg)); // send a message
-    };
-
-    ws.onmessage = e => {
-      // a message was received
-      console.log(e.data);
-      var Apidata = JSON.parse(e.data);
-      if (Apidata.feed == "heartbeat") {
-        this.setState({ time: Apidata.time, feed: Apidata.feed });
-      }
-    };
-
-    ws.onerror = e => {
-      // an error occurred
-      console.log(e.message);
-    };
-
-    ws.onclose = e => {
-      // connection closed
-      console.log(e.code, e.reason);
-    };
-  }
-
-  _keyExtractor = (item, index) => item.id;
-
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <Text style={{ textAlign: "center" }}>
-          HeartBeat : {this.state.time}
-        </Text>
-        <Content />
-      </View>
-    );
-  }
-}
-
-class Content extends PureComponent {
+class WatchList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       time: 0,
       feed: "feed",
       text: "Search & Add",
-      data: [...Array(20)].map((d, index) => ({
-        key: `item-${index}`,
-        label: index,
-        backgroundColor: `rgb(${Math.floor(Math.random() * 255)}, ${index *
-          5}, ${132})`
-      }))
+      watchList: [],
+      isStateChanged: false
     };
   }
 
-  // _renderRow = ({data, active}) => {
-  //     return <Row data={data} active={active} />
-  // }
+  componentWillMount() {
+    this.setState({
+      watchList: this.props.currentWatchList
+    });
+  }
 
   renderItem = ({ item, index, move, moveEnd, isActive }) => {
     return (
       <View
-        key={index}
+        key={item.id}
         style={{
           flex: 1,
           height: 70,
@@ -119,16 +65,133 @@ class Content extends PureComponent {
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <Header
+          toggleScreen={this.props.toggleEditScreen}
+          isStateChanged={this.state.isStateChanged}
+          updateList={this.updateList}
+        />
+        <SearchBar />
         <DraggableFlatList
-          data={this.state.data}
+          data={this.state.watchList.list}
           renderItem={this.renderItem}
-          keyExtractor={(item, index) => `draggable-item-${item.key}`}
+          keyExtractor={(item, index) => item.id.toString()}
           scrollPercent={6}
-          onMoveEnd={({ data }) => this.setState({ data })}
+          onMoveEnd={({ data }) => {
+            // console.warn(data);
+            this.setState({
+              isStateChanged: true,
+              watchList: { ...this.state.watchList, list: data }
+            });
+          }}
         />
       </View>
     );
   }
+
+  updateList = () => {
+    this.props.updateList(this.state.watchList);
+    this.props.toggleScreen();
+  };
 }
 
-export default WatchList;
+const Header = props => {
+  return (
+    <View style={{ height: 50 * Constants.vw, flexDirection: "row" }}>
+      <TouchableOpacity
+        onPress={() => {
+          props.toggleScreen();
+        }}
+        style={{ flex: 1 }}
+      >
+        <IIcon name="ios-arrow-round-back" size={40} color="black" />
+      </TouchableOpacity>
+      <View style={{ flex: 4 }}>
+        <Text>Edit WatchList</Text>
+      </View>
+      <View style={{ flex: 1 }}>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            backgroundColor: props.isStateChanged ? "green" : "grey",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+          disabled={!props.isStateChanged}
+          onPress={() => {
+            props.updateList();
+          }}
+        >
+          <Text>Save</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const SearchBar = () => {
+  return (
+    <View
+      style={{
+        height: 50 * Constants.vw,
+        elevation: 1,
+        borderRadius: 2 * Constants.vw,
+        marginLeft: 15 * Constants.vw,
+        marginRight: 15 * Constants.vw,
+        padding: 5 * Constants.vw,
+        backgroundColor: "#FAFAFA",
+        flexDirection: "row"
+      }}
+    >
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <IIcon name="ios-search" size={22} />
+      </View>
+      <View style={{ flex: 8 }}>
+        <TextInput
+          // onChangeText={text => this.setState({ text })}
+          // value={this.state.text}
+          placeholder="Search & Add"
+        />
+      </View>
+      <View
+        style={{
+          flex: 2,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Text style={{ fontSize: 12 * Constants.vw, fontWeight: "100" }}>
+          45/50
+        </Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <OIcon name="settings" size={22} />
+      </View>
+    </View>
+  );
+};
+
+const mapStateToProps = state => ({
+  currentWatchList: state.watchList.currentWatchList
+});
+
+const mapDispatchToProps = dispatch => ({
+  toggleEditScreen: () => dispatch(toggleEditScreen()),
+  updateList: list => dispatch(updateList(list))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WatchList);

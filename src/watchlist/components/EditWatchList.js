@@ -10,21 +10,27 @@ class EditWatchList extends Component {
     this.state = {};
   }
 
+  toggleScreen = () => {
+    this.props.toggleEditScreen();
+  };
+
   render() {
+    // console.warn("EDIT SCREEN ", this.props.currentWatchList);
+    // cur
     return (
       <Modal
         animationType="slide"
         transparent={false}
         visible={this.props.EditScreenVisible}
         onRequestClose={() => {
-          this.props.toggleEditScreen();
+          this.toggleScreen();
         }}
       >
         <View style={{ flex: 1, marginTop: 22 }}>
-          <View>
-            <Text>Hello World!</Text>
-          </View>
-          <WatchListDrag />
+          <WatchListDrag
+            toggleScreen={this.toggleScreen}
+            watchList={this.props.watchList[0]}
+          />
         </View>
       </Modal>
     );
@@ -34,6 +40,7 @@ class EditWatchList extends Component {
 const mapStateToProps = state => ({
   modalVisible: state.modal.modalVisible,
   EditScreenVisible: state.modal.EditScreenVisible,
+  watchList: state.watchList.watchList,
   currentWatchList: state.watchList.currentWatchList
 });
 

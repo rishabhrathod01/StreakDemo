@@ -70,11 +70,7 @@ const SAMPLE_LIST = [
 ];
 
 const INITIAL_STATE = {
-  currentWatchlist: {
-    key: 0,
-    name: "P1",
-    list: [...SAMPLE_LIST]
-  },
+  currentWatchList: {},
   watchList: [
     {
       key: 0,
@@ -102,27 +98,34 @@ const INITIAL_STATE = {
 const WatchListReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UPDATE_LIST:
+      // console.warn("Updateding List", JSON.stringify(action.list));
       const newWatchList = state.watchList;
-      newWatchList.map(watch => {
-        if (watch.key == action.newWatch.key) {
-          watch.list = [...action.newWatch.list];
+      let i = -1;
+      newWatchList.map((watch, index) => {
+        if (watch.key == action.list.key) {
+          i = index;
         }
       });
+      newWatchList.splice(i, 1, action.list);
       return {
         ...state,
         watchList: [...newWatchList]
       };
 
     case SET_CURRENT_WATCHLIST:
-      let currentWatchlist = {};
-      newWatchList.map(watch => {
-        if (watch.key == action.key) {
-          currentWatchlist = watch.list;
+      // console.warn("SetCWL", JSON.stringify(action.watchList));
+      let watchList = null;
+      state.watchList.map((watch, index) => {
+        if (watch.key == action.watchList) {
+          watchList = watch;
         }
       });
+
       return {
         ...state,
-        currentWatchlist: { ...currentWatchlist }
+        currentWatchList: {
+          ...watchList
+        }
       };
     default:
       return state;

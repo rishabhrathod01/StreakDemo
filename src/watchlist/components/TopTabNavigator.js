@@ -13,65 +13,50 @@ import { connect } from "react-redux";
 
 class CustomTopTabNavigator extends PureComponent {
   render() {
+    // console.warn("CustomTabRendered");
+
+    let routeConfig = {};
+    this.props.watchList.map(watch => {
+      routeConfig[watch.name] = {
+        screen: props => <WatchList {...props} watchList={watch} />
+      };
+    });
+
     const TopTabNavigator = createAppContainer(
-      createMaterialTopTabNavigator(
-        //if not fixed then a loop can be run to do same
-        {
-          P1: {
-            screen: props => (
-              <WatchList {...props} watchList={this.props.watchList[0]} />
-            )
+      createMaterialTopTabNavigator(routeConfig, {
+        swipeEnabled: true,
+        initialRouteName: this.props.currentWatchList.name,
+        tabBarOptions: {
+          activeTintColor: "blue",
+          inactiveTintColor: "grey",
+          style: {
+            backgroundColor: "#F0F0F0",
+            elevation: 0
           },
-          Watch: {
-            screen: props => (
-              <WatchList {...props} watchList={this.props.watchList[1]} />
-            )
+          indicatorStyle: {
+            backgroundColor: "blue",
+            margin: 8 * Constants.vw
           },
-          P2: {
-            screen: props => (
-              <WatchList {...props} watchList={this.props.watchList[2]} />
-            )
+          tabStyle: {
+            height: 70 * Constants.vw
           },
-          WatchList: {
-            screen: props => (
-              <WatchList {...props} watchList={this.props.watchList[3]} />
-            )
+          labelStyle: {
+            fontSize: 12
           }
         },
-        {
-          swipeEnabled: true,
-          tabBarOptions: {
-            activeTintColor: "blue",
-            inactiveTintColor: "grey",
-            style: {
+        tabBarComponent: props => (
+          <View
+            style={{
               backgroundColor: "#F0F0F0",
-              elevation: 0
-            },
-            indicatorStyle: {
-              backgroundColor: "blue",
-              margin: 8 * Constants.vw
-            },
-            tabStyle: {
-              height: 70 * Constants.vw
-            },
-            labelStyle: {
-              fontSize: 12
-            }
-          },
-          tabBarComponent: props => (
-            <View
-              style={{
-                backgroundColor: "#F0F0F0",
-                height: 100 * Constants.vw,
-                marginBottom: 30 * Constants.vw
-              }}
-            >
-              <MaterialTopTabBar {...props} />
-              <SearchBar />
-            </View>
-          )
-        }
-      )
+              height: 100 * Constants.vw,
+              marginBottom: 30 * Constants.vw
+            }}
+          >
+            <MaterialTopTabBar {...props} />
+            <SearchBar />
+          </View>
+        )
+      })
     );
 
     return (
@@ -137,7 +122,28 @@ const SearchBar = () => {
 };
 
 const mapStateToProps = state => ({
-  watchList: state.watchList.watchList
+  watchList: state.watchList.watchList,
+  currentWatchList: state.watchList.currentWatchList
 });
 
 export default connect(mapStateToProps)(CustomTopTabNavigator);
+
+// P1: {
+//   screen: props => (
+//     <WatchList {...props} watchList={this.props.watchList[0]} />
+//   )
+// },
+// Watch: {
+//   screen: props => (
+//     <WatchList {...props} watchList={this.props.watchList[1]} />
+//   )
+// },
+// P2: {
+//   screen: props => (
+//     <WatchList {...props} watchList={this.props.watchList[2]} />
+//   )
+// },
+// WatchList: {
+//   screen: props => (
+//     <WatchList {...props} watchList={this.props.watchList[3]} />
+//   )
