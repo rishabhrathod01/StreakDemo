@@ -15,11 +15,9 @@ class EditWatchList extends Component {
   };
 
   render() {
-    // console.warn("EDIT SCREEN ", this.props.currentWatchList);
-    // cur
     return (
       <Modal
-        animationType="slide"
+        animationType="none"
         transparent={false}
         visible={this.props.EditScreenVisible}
         onRequestClose={() => {

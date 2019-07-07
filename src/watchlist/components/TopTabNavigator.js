@@ -25,7 +25,7 @@ class CustomTopTabNavigator extends PureComponent {
     const TopTabNavigator = createAppContainer(
       createMaterialTopTabNavigator(routeConfig, {
         swipeEnabled: true,
-        initialRouteName: this.props.currentWatchList.name,
+        // initialRouteName: this.props.currentWatchList.name,
         tabBarOptions: {
           activeTintColor: "blue",
           inactiveTintColor: "grey",
@@ -127,23 +127,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(CustomTopTabNavigator);
-
-// P1: {
-//   screen: props => (
-//     <WatchList {...props} watchList={this.props.watchList[0]} />
-//   )
-// },
-// Watch: {
-//   screen: props => (
-//     <WatchList {...props} watchList={this.props.watchList[1]} />
-//   )
-// },
-// P2: {
-//   screen: props => (
-//     <WatchList {...props} watchList={this.props.watchList[2]} />
-//   )
-// },
-// WatchList: {
-//   screen: props => (
-//     <WatchList {...props} watchList={this.props.watchList[3]} />
-//   )

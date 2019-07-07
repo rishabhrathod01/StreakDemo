@@ -99,7 +99,7 @@ class RootScreen extends React.Component {
                   left: 0,
                   right: 0,
                   borderRadius: 10,
-                  height: 2 * HEIGHT,
+                  height: 5 * HEIGHT,
                   backgroundColor: "white"
                 }
               ]}

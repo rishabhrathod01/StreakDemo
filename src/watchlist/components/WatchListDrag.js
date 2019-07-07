@@ -14,9 +14,7 @@ class WatchList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
-      feed: "feed",
-      text: "Search & Add",
+      name: props.currentWatchList.name,
       watchList: [],
       isStateChanged: false
     };
@@ -24,7 +22,8 @@ class WatchList extends Component {
 
   componentWillMount() {
     this.setState({
-      watchList: this.props.currentWatchList
+      watchList: this.props.currentWatchList,
+      isStateChanged: false
     });
   }
 
@@ -35,10 +34,11 @@ class WatchList extends Component {
         style={{
           flex: 1,
           height: 70,
-          backgroundColor: isActive ? "grey" : "white",
+          backgroundColor: "white",
           alignItems: "center",
           justifyContent: "center",
-          flexDirection: "row"
+          flexDirection: "row",
+          elevation: isActive ? 2 : 0
         }}
       >
         <TouchableOpacity
@@ -62,6 +62,13 @@ class WatchList extends Component {
     );
   };
 
+  changeName = name => {
+    this.setState({
+      watchList: { ...this.state.watchList, name: name },
+      isStateChanged: true
+    });
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -70,7 +77,10 @@ class WatchList extends Component {
           isStateChanged={this.state.isStateChanged}
           updateList={this.updateList}
         />
-        <SearchBar />
+        <SearchBar
+          name={this.state.watchList.name}
+          changeName={this.changeName}
+        />
         <DraggableFlatList
           data={this.state.watchList.list}
           renderItem={this.renderItem}
@@ -88,33 +98,34 @@ class WatchList extends Component {
     );
   }
 
-  updateList = () => {
-    this.props.updateList(this.state.watchList);
+  updateList = async () => {
+    await this.props.updateList(this.state.watchList);
     this.props.toggleScreen();
   };
 }
 
 const Header = props => {
   return (
-    <View style={{ height: 50 * Constants.vw, flexDirection: "row" }}>
+    <View style={{ height: 40 * Constants.vw, flexDirection: "row" }}>
       <TouchableOpacity
         onPress={() => {
           props.toggleScreen();
         }}
-        style={{ flex: 1 }}
+        style={{ flex: 1, margin: 10 * Constants.vw }}
       >
         <IIcon name="ios-arrow-round-back" size={40} color="black" />
       </TouchableOpacity>
-      <View style={{ flex: 4 }}>
+      <View style={{ flex: 4, justifyContent: "center", alignItems: "center" }}>
         <Text>Edit WatchList</Text>
       </View>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, padding: 10 * Constants.vw }}>
         <TouchableOpacity
           style={{
             flex: 1,
             backgroundColor: props.isStateChanged ? "green" : "grey",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            borderRadius: 5 * Constants.vw
           }}
           disabled={!props.isStateChanged}
           onPress={() => {
@@ -128,7 +139,7 @@ const Header = props => {
   );
 };
 
-const SearchBar = () => {
+const SearchBar = props => {
   return (
     <View
       style={{
@@ -145,17 +156,16 @@ const SearchBar = () => {
       <View
         style={{
           flex: 1,
-          justifyContent: "center",
-          alignItems: "center"
+          padding: 10 * Constants.vw
         }}
       >
         <IIcon name="ios-search" size={22} />
       </View>
       <View style={{ flex: 8 }}>
         <TextInput
-          // onChangeText={text => this.setState({ text })}
-          // value={this.state.text}
-          placeholder="Search & Add"
+          onChangeText={name => props.changeName(name)}
+          value={props.name}
+          placeholder="edit Name"
         />
       </View>
       <View
