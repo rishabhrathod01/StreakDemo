@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import { toggleEditScreen } from "../../../store/actions/Modal";
 import { updateList } from "../../../store/actions/WatchListActions";
 import Header from "./Header";
+import SearchBar from "./SearchBar";
 
 class WatchList extends Component {
   constructor(props) {
