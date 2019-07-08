@@ -4,8 +4,6 @@ import { View, TouchableOpacity, Text, TextInput } from "react-native";
 import DraggableFlatList from "react-native-draggable-flatlist";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { Constants } from "../../../common/constants";
-import IIcon from "react-native-vector-icons/Ionicons";
-import OIcon from "react-native-vector-icons/Octicons";
 import { connect } from "react-redux";
 import { toggleEditScreen } from "../../../store/actions/Modal";
 import { updateList } from "../../../store/actions/WatchListActions";

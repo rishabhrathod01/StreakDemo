@@ -7,13 +7,11 @@ import { Constants } from "../../common/constants";
 
 class ListElement extends Component {
   setcurrentWatchList = key => {
-    // console.warn("set Current watchlist ", key);
     this.props.setcurrentWatchList(key);
   };
 
   longPressHandler = () => {
     this.setcurrentWatchList(this.props.currentWatchListKey);
-    // console.warn(this.props.currentWatchListKey);
     this.props.toggleEditScreen();
   };
   render() {

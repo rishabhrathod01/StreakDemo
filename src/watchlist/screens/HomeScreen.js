@@ -27,7 +27,6 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <Header />
-        {/* <TopTabNavigator toggleModal={this.toggleModal} /> */}
         <CustomTopTabNavigator />
         <EditWatchList
           isVisible={this.state.EditScreenVisible}

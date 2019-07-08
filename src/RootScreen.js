@@ -6,7 +6,8 @@ import {
   BackHandler,
   Animated,
   PanResponder,
-  TouchableOpacity
+  TouchableOpacity,
+  StyleSheet
 } from "react-native";
 import { connect } from "react-redux";
 import { hideModal } from "./store/actions/Modal";
@@ -68,19 +69,7 @@ class RootScreen extends React.Component {
       <View style={{ flex: 1 }}>
         <TabNavigator />
         {this.props.modalVisible ? (
-          <Animated.View
-            style={[
-              {
-                justifyContent: "flex-start",
-                height: HEIGHT,
-                zIndex: 10,
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0
-              }
-            ]}
-          >
+          <Animated.View style={[styles.mainAnimatedContainer]}>
             <AnimatedTouchable
               activeOpacity={1}
               style={{ backgroundColor: "rgba(0,0,0,0.2)", height: HEIGHT }}
@@ -90,19 +79,7 @@ class RootScreen extends React.Component {
             />
             <Animated.View
               {...this.panResponder.panHandlers}
-              style={[
-                animatedHeight,
-                {
-                  zIndex: 10,
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  borderRadius: 10,
-                  height: 5 * HEIGHT,
-                  backgroundColor: "white"
-                }
-              ]}
+              style={[animatedHeight, styles.animatedContainer]}
             >
               <View style={{ flex: 1 }}>
                 <View style={{ padding: 10 * Constants.vw }}>
@@ -116,8 +93,6 @@ class RootScreen extends React.Component {
                   </Text>
                   <Text
                     style={{
-                      position: "relative",
-                      top: 0,
                       fontSize: 12 * Constants.vw,
                       color: "black"
                     }}
@@ -143,16 +118,7 @@ class RootScreen extends React.Component {
                       padding: 10 * Constants.vw
                     }}
                   >
-                    <TouchableOpacity
-                      style={{
-                        height: 60 * Constants.vw,
-                        width: 150 * Constants.vw,
-                        backgroundColor: "blue",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 5 * Constants.vw
-                      }}
-                    >
+                    <TouchableOpacity style={styles.actionButton}>
                       <View>
                         <Text style={{ color: "white" }}>BUY</Text>
                       </View>
@@ -164,14 +130,7 @@ class RootScreen extends React.Component {
                     }}
                   >
                     <TouchableOpacity
-                      style={{
-                        height: 60 * Constants.vw,
-                        width: 150 * Constants.vw,
-                        backgroundColor: "red",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        borderRadius: 5 * Constants.vw
-                      }}
+                      style={[styles.actionButton, { backgroundColor: "red" }]}
                     >
                       <View>
                         <Text style={{ color: "white" }}>SELL</Text>
@@ -188,16 +147,37 @@ class RootScreen extends React.Component {
       </View>
     );
   }
-
-  renderView = () => {
-    console.warn("HI");
-    return (
-      <View>
-        <Text>{this.props.item.name}Hello</Text>
-      </View>
-    );
-  };
 }
+
+const styles = StyleSheet.create({
+  actionButton: {
+    height: 60 * Constants.vw,
+    width: 150 * Constants.vw,
+    backgroundColor: "blue",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5 * Constants.vw
+  },
+  animatedContainer: {
+    zIndex: 10,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    borderRadius: 10,
+    height: 5 * HEIGHT,
+    backgroundColor: "white"
+  },
+  mainAnimatedContainer: {
+    justifyContent: "flex-start",
+    height: HEIGHT,
+    zIndex: 10,
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0
+  }
+});
 const mapStateToProps = state => ({
   modalVisible: state.modal.modalVisible,
   item: state.modal.item

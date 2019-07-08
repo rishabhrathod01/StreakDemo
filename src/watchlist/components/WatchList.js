@@ -44,7 +44,6 @@ class WatchList extends React.Component {
   }
 
   render() {
-    // console.warn("watchListrendered", this.state.watchList);
     return (
       <View>
         <FlatList
